@@ -25,7 +25,7 @@
 
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">@MinnData</a></li>
+          <li class="active"><a target="_blank" href="https://twitter.com/minndata">@MinnData</a></li>
         </ul>
         <h3 class="muted">MinnPost Code</h3>
       </div>
@@ -38,28 +38,8 @@
 
       <hr>
 
-      <div class="row-fluid spaced-row">
-        <div class="span6">
-          <h4>JSONProxy</h4>
-          <p>A simple proxy to turn JSON into JSONP for cross domain requests.</p>
-        </div>
-
-        <div class="span6">
-          <h4>JSONProxy</h4>
-          <p>A simple proxy to turn JSON into JSONP for cross domain requests.</p>
-        </div>
-      </div>
-
-      <div class="row-fluid spaced-row">
-        <div class="span6">
-          <h4>JSONProxy</h4>
-          <p>A simple proxy to turn JSON into JSONP for cross domain requests.</p>
-        </div>
-
-        <div class="span6">
-          <h4>JSONProxy</h4>
-          <p>A simple proxy to turn JSON into JSONP for cross domain requests.</p>
-        </div>
+      <div id="repos">
+        <div class="loading muted text-center">Loading...</div>
       </div>
 
       <hr>
@@ -69,6 +49,30 @@
       </div>
 
     </div> <!-- /container -->
+    
+    <!-- Client side templates -->
+    <script id="template-repos" type="text/template">
+      <% var count = 0;  _.each(repos, function(r, n) { %>
+        <% if (count % 2 === 0) { %><div class="row-fluid spaced-row"><% } %>
+        
+        <div class="span6">
+          
+          <h4><a href="<%= r.html_url %>"><%= r.name %></a> <small class="muted"><%= r.language %></small></h4>
+          
+          <p><em><%= r.status %></em></p>
+          <p><%= r.description %></p>
+        </div>
+        
+        <% if (count % 2 === 1) { %></div><% } %>
+        <% count++ %>
+      <% }) %>
+      
+      <% if (count % 2 === 0) { %></div><% } %>
+    </script>
+    
+    <script id="template-error" type="text/template">
+        <div class="loading muted text-center">Error: <%= error %></div>
+    </script>
 
     <!-- Le javascript
     ================================================== -->
