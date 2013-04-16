@@ -15,35 +15,35 @@
   var orgData;
   
   // Specific repos to get with a score (1-10)
-  // and a small blurb on status of project
+  // and a small blurb on the resusability status of project
   var repos = {
     'legislature-tracker': {
-      score: 3,
-      status: 'Being updated for resuse'
+      r_score: 3,
+      r_status: 'Being updated for resuse'
     },
     'jsonproxy': {
-      score: 9,
-      status: 'Easily deployable on Heroku'
+      r_score: 9,
+      r_status: 'Easily deployable on Heroku'
     },
     'gs-proxy': {
-      score: 8,
-      status: 'Easily deployable on Heroku'
+      r_score: 8,
+      r_status: 'Easily deployable on Heroku'
     },
     'leaflet-addons': {
-      score: 4,
-      status: 'Could be more tested'
+      r_score: 4,
+      r_status: 'Could be more tested'
     },
     'mn-boundaryservice': {
-      score: 6,
-      status: 'Reusable, but specific to Minnesota'
+      r_score: 6,
+      r_status: 'Reusable, but specific to Minnesota'
     },
     'jquery-vertical-timeline': {
-      score: 8,
-      status: 'Reusable'
+      r_score: 8,
+      r_status: 'Reusable'
     },
     'simple-map-d3': {
-      score: 5,
-      status: 'A bit buggy'
+      r_score: 5,
+      r_status: 'Not fully tested'
     }
   };
   
@@ -94,7 +94,7 @@
         });
         
         // Sort by score
-        reposData = _.sortBy(reposData, function(r) { return -1 * r.score; });
+        reposData = _.sortBy(reposData, function(r) { return -1 * r.r_score; });
         
         display();
       })
