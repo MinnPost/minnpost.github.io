@@ -18,11 +18,11 @@
   // and a small blurb on the resusability status of project
   var repos = {
     'legislature-tracker': {
-      r_score: 3,
-      r_status: 'Being updated for resuse'
+      r_score: 9,
+      r_status: 'Reusable and launched in multiple states'
     },
     'jsonproxy': {
-      r_score: 9,
+      r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
     'gs-proxy': {
