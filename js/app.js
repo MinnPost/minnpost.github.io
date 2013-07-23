@@ -29,6 +29,10 @@
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
+    'all-good-proxy': {
+      r_score: 8,
+      r_status: 'Easily deployable on Heroku'
+    },
     'leaflet-addons': {
       r_score: 4,
       r_status: 'Could be more tested'
