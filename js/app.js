@@ -62,8 +62,6 @@
   
   // Main callback when all is loaded
   function display() {
-    console.log(reposData);
-    
     if (!reposData[0].message) {
       $(container).html(templateRepos({ repos: reposData }));
     }
