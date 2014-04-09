@@ -13,7 +13,7 @@
   var container = '#repos';
   var reposData = {};
   var orgData;
-  
+
   // Specific repos to get with a score (1-10)
   // and a small blurb on the resusability status of project
   var repos = {
@@ -33,9 +33,13 @@
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
+    'drupal-permissions': {
+      r_score: 7,
+      r_status: 'Reusable'
+    },
     'leaflet-addons': {
       r_score: 4,
-      r_status: 'Could be more tested'
+      r_status: 'Could be more tested (not maintained)'
     },
     'mn-boundaryservice': {
       r_score: 6,
@@ -46,11 +50,19 @@
       r_status: 'Reusable'
     },
     'simple-map-d3': {
-      r_score: 5,
+      r_score: 6,
       r_status: 'Not fully tested'
+    },
+    'minnpost-hazmat': {
+      r_score: 6,
+      r_status: 'Requires HAZMAT data from IRE'
+    },
+    'tulip': {
+      r_score: 7,
+      r_status: 'Deployable application'
     }
   };
-  
+
   // Make deferred repo call
   function repoDeferred(repoID) {
     return $.ajax({
@@ -59,7 +71,7 @@
       cache: true
     });
   };
-  
+
   // Main callback when all is loaded
   function display() {
     if (!reposData[0].message) {
@@ -69,18 +81,18 @@
       displayError(reposData[0].message);
     }
   };
-  
+
   // Handle error
   function displayError(error) {
     $(container).html(templateError({ error: error }));
   };
-  
+
   // Page load
   $(document).ready(function() {
     // Make template from HTML
     templateRepos = _.template($(templateRepos).html());
     templateError = _.template($(templateError).html());
-    
+
     // Get repo data
     var deferreds = [];
     _.each(repos, function(r, k) {
@@ -94,10 +106,10 @@
             _.extend(reposData[a[0].data.name], repos[a[0].data.name]);
           }
         });
-        
+
         // Sort by score
         reposData = _.sortBy(reposData, function(r) { return -1 * r.r_score; });
-        
+
         display();
       })
       .fail(function() {

@@ -1,0 +1,26 @@
+{
+  "name": "minnpost.github.io",
+  "version": "0.0.1",
+  "homepage": "http://code.minnpost.com",
+  "authors": [
+    "Alan Palazzolo <apalazzolo@minnpost.com>"
+  ],
+  "description": "Github page for MinnData team specifically listing reusable projects.",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "html5shiv": "~3.7.0",
+    "moment": "~2.5.1",
+    "underscore": "~1.6.0",
+    "jquery": "~1.11"
+  }
+}
