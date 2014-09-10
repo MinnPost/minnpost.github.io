@@ -34,7 +34,7 @@
     <!-- Client side templates -->
     <script id="template-projects" type="text/template">
       {{#githubError}}
-        <p><strong>Error getting data from Github.</strong></p>
+        <p><strong>Error getting data from Github.</strong>  {{ githubError }}</p>
       {{/githubError}}
 
       {{#(!githubError && !repos.0.name)}}
@@ -76,7 +76,7 @@
         </p>
 
         <p class="small repo-meta">
-          {{ language }} | Created {{ moment.utc(created_at).fromNow() }} | Updated {{ moment.utc(updated_at).fromNow() }}
+          {{ (language) ? language + ' | ' : '' }} Created {{ moment.utc(created_at).fromNow() }} | Updated {{ moment.utc(updated_at).fromNow() }}
         </p>
       </div>
       <!-- {{/project}} -->

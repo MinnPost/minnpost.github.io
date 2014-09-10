@@ -118,7 +118,7 @@
     });
   });
   $.when.apply($, requests).done(function() {
-    if (arguments[0][1] === 'success' && arguments[0][0].data.message !== 'Not Found') {
+    if (arguments[0][1] === 'success' && !arguments[0][0].data.message) {
       _.each(arguments, function(a, ai) {
         _.each(a[0].data, function(d, di) {
           _.each(repos, function(r, ri) {
@@ -133,7 +133,7 @@
     }
     else {
       // Error
-      view.set('githubError', true);
+      view.set('githubError', arguments[0][0].data.message);
     }
   });
 
