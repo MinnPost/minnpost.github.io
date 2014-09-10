@@ -7,113 +7,134 @@
 (function($, undefined) {
   // Some "globals"
   var repoURL = 'https://api.github.com/repos/minnpost/[[[REPO_NAME]]]';
+  var reposURL = 'https://api.github.com/users/minnpost/repos?page=[[[PAGE]]]&per_page=100';
+  var repoSearchURL = 'https://api.github.com/search/repositories?q=[[[REPOS]]]+user:minnpost';
   var orgURL = 'https://api.github.com/orgs/minnpost';
-  var templateRepos = '#template-repos';
-  var templateError = '#template-error';
-  var container = '#repos';
+  var templateProjects = $('#template-projects').html();
+  var $container = $('.projects');
   var reposData = {};
   var orgData;
 
   // Specific repos to get with a score (1-10)
   // and a small blurb on the resusability status of project
-  var repos = {
-    'legislature-tracker': {
+  var repos = [
+    {
+      r: 'legislature-tracker',
       r_score: 9,
       r_status: 'Reusable and launched in multiple states'
     },
-    'jsonproxy': {
+    {
+      r: 'jsonproxy',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
-    'gs-proxy': {
+    {
+      r: 'gs-proxy',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
-    'all-good-proxy': {
+    {
+      r: 'all-good-proxy',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
     },
-    'drupal-permissions': {
+    {
+      r: 'drupal-permissions',
       r_score: 7,
       r_status: 'Reusable'
     },
-    'leaflet-addons': {
-      r_score: 4,
+    {
+      r: 'leaflet-addons',
+      r_score: 3,
       r_status: 'Could be more tested (not maintained)'
     },
-    'mn-boundaryservice': {
+    {
+      r: 'mn-boundaryservice',
       r_score: 6,
       r_status: 'Reusable, but specific to Minnesota'
     },
-    'jquery-vertical-timeline': {
+    {
+      r: 'jquery-vertical-timeline',
       r_score: 8,
       r_status: 'Reusable'
     },
-    'simple-map-d3': {
+    {
+      r: 'simple-map-d3',
       r_score: 6,
       r_status: 'Not fully tested'
     },
-    'minnpost-hazmat': {
-      r_score: 6,
-      r_status: 'Requires HAZMAT data from IRE'
+    {
+      r: 'tulip',
+      r_score: 9,
+      r_status: 'Public application'
     },
-    'tulip': {
+    {
+      r: 'minnpost-styles',
+      r_score: 5,
+      r_status: 'Could be a good starting point for other organizations'
+    },
+    {
+      r: 'aranger',
+      r_score: 9,
+      r_status: 'Public application'
+    },
+    {
+      r: 'car-code',
+      r_score: 9,
+      r_status: 'Public application'
+    },
+    {
+      r: 'mbtiles2s3',
+      r_score: 9,
+      r_status: 'Easily resuable tool'
+    },
+    {
+      r: 'tilestream-server',
       r_score: 7,
-      r_status: 'Deployable application'
+      r_status: 'Reusable instructions'
     }
-  };
+  ];
+  repos = _.sortBy(repos, function(r, ri) {
+    return -1 * r.r_score;
+  });
 
-  // Make deferred repo call
-  function repoDeferred(repoID) {
+  // Set up ractive view
+  var view = new Ractive({
+    el: $container,
+    template: templateProjects,
+    data: {
+      repos: repos,
+      moment: moment
+    }
+  });
+
+  // Get data from Github
+  var requests = [1, 2, 3];
+  requests = _.map(requests, function(r, ri) {
     return $.ajax({
-      url: repoURL.replace('[[[REPO_NAME]]]', repoID) + '?callback=?',
+      url: reposURL.replace('[[[PAGE]]]', r) + '&callback=?',
       dataType: 'jsonp',
       cache: true
     });
-  };
+  });
+  $.when.apply($, requests).done(function() {
+    if (arguments[0][1] === 'success' && arguments[0][0].data.message !== 'Not Found') {
+      _.each(arguments, function(a, ai) {
+        _.each(a[0].data, function(d, di) {
+          _.each(repos, function(r, ri) {
+            if (r.r === d.name) {
+              repos[r] = $.extend(true, r, d);
+            }
+          });
+        });
+      });
 
-  // Main callback when all is loaded
-  function display() {
-    if (!reposData[0].message) {
-      $(container).html(templateRepos({ repos: reposData }));
+      view.set('repos', repos);
     }
     else {
-      displayError(reposData[0].message);
+      // Error
+      view.set('githubError', true);
     }
-  };
-
-  // Handle error
-  function displayError(error) {
-    $(container).html(templateError({ error: error }));
-  };
-
-  // Page load
-  $(document).ready(function() {
-    // Make template from HTML
-    templateRepos = _.template($(templateRepos).html());
-    templateError = _.template($(templateError).html());
-
-    // Get repo data
-    var deferreds = [];
-    _.each(repos, function(r, k) {
-      deferreds.push(repoDeferred(k));
-    });
-    $.when.apply($, deferreds)
-      .done(function() {
-        _.each(arguments, function(a) {
-          if (a[0].data && a[0].data.message != 'Not Found') {
-            reposData[a[0].data.name] = a[0].data;
-            _.extend(reposData[a[0].data.name], repos[a[0].data.name]);
-          }
-        });
-
-        // Sort by score
-        reposData = _.sortBy(reposData, function(r) { return -1 * r.r_score; });
-
-        display();
-      })
-      .fail(function() {
-        displayError('Issue getting data from Github API.');
-      });
   });
+
 })(jQuery);

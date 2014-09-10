@@ -5,83 +5,81 @@
     <meta charset="utf-8">
     <title>MinnPost Code</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Reusable projects by MinnPost">
+    <meta name="author" content="MinnPost">
+
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
 
     <!-- Le styles -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./bower_components/minnpost-styles/dist/minnpost-styles.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="./bower_components/html5shiv/dist/html5shiv.js"></script>
-    <![endif]-->
   </head>
 
-  <body>
-    <div class="container container-narrow">
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a target="_blank" href="https://twitter.com/minndata">@MinnData</a></li>
-        </ul>
+  <body class="mp">
+    <div class="minnpost-page-container">
+      <h1>MinnPost Code</h1>
 
-    	  <img class="pull-left" src="images/minnpost-logo.png" width=200 alt="MinnPost logo" /><br/>
-    	  <h3 class="muted">Code</h3>
-      </div>
+      <p class="lead">MinnPost writes a lot of code for our projects and stories.  We also believe in being open and sharing our work, so we put all our code on <a href="https://github.com/minnpost">GitHub</a>.  It can get a bit messy on our Github page as many of our projects are specific to MinnPost, so we have highlighted the more <strong>reusable and deployable projects</strong> here.  Enjoy.</p>
 
-      <hr>
+      <div class="projects cf"></div>
 
-      <div class="jumbotron">
-        <p class="lead">MinnPost writes a lot of code for our projects and stories.  We also believe in being open and sharing our work, so we put all our code on <a href="https://github.com/minnpost">GitHub</a>.  It can get a bit messy on our Github page as many of our projects are specific to MinnPost, so we have highlighted the more <strong>reusable projects</strong> here.  Enjoy.</p>
-      </div>
-
-      <hr>
-
-      <div id="repos">
-        <div class="loading muted text-center">Loading...</div>
-      </div>
-
-      <hr>
-
-      <div class="footer">
+      <div class="footnote">
         <p>See our work at <a href="http://minnpost.com" target="_blank">MinnPost.com</a></p>
       </div>
-
-    </div> <!-- /container -->
+    </div>
 
     <!-- Client side templates -->
-    <script id="template-repos" type="text/template">
-      <% var count = 0;  _.each(repos, function(r, n) { %>
-        <% if (count % 2 === 0) { %><div class="row"><% } %>
+    <script id="template-projects" type="text/template">
+      {{#githubError}}
+        <p><strong>Error getting data from Github.</strong></p>
+      {{/githubError}}
 
-        <div class="col-md-6 spaced-row">
-
-          <h4>
-            <% if (r.homepage) { %>
-              <a title="Project page or example." href="<%= r.homepage %>"><%= r.name %></a>
-            <% } else { %>
-              <%= r.name %>
-            <% } %>
-
-            <small class="muted">
-              <a title="Project code." href="<%= r.html_url %>"><i class="fa fa-github-square fa-lg"></i></a>
-            </small>
-          </h4>
-
-          <p><small class="muted"><%= r.r_status %></small></p>
-          <p><%= r.description %></p>
+      {{#(!githubError && !repos.0.name)}}
+        <div class="loading-container">
+          <i class="loading"></i> Loading Github data...
         </div>
+      {{/()}}
 
-        <% if (count % 2 === 1) { %></div><% } %>
-        <% count++ %>
-      <% }) %>
+      {{^githubError}}
+        {{#repos:ri}}
+          {{#(ri % 2 === 0)}}
+            <div class="row">
+              <div class="column-medium-50">{{>project}}</div>
+              <div class="column-medium-50">
+                {{#repos[ri + 1]}}
+                  {{>project}}
+                {{/repos[ri + 1]}}
+              </div>
+            </div>
+          {{/()}}
+        {{/repos}}
+      {{/githubError}}
 
-      <% if (count % 2 === 0) { %></div><% } %>
-    </script>
+      <!-- {{>project}} -->
+      <div class="project">
+        <h3>
+          {{#(homepage || html_url)}}
+            <a title="Project page or example" href="{{ (homepage) ? homepage : html_url }}">{{ name }}</a>
+          {{/()}}
+          {{^(homepage || html_url)}}{{ (name) ? name : r }}{{/()}}
+          {{#html_url}}
+            <a title="project on Github" href="{{ html_url }}"><i class="fa fa-github color-green"></i></a>
+          {{/html_url}}
+        </h3>
 
-    <script id="template-error" type="text/template">
-        <div class="loading muted text-center">Error: <%= error %></div>
+        <p>
+          {{ description }}
+          <em>{{ r_status }}.</em>
+        </p>
+
+        <p class="small repo-meta">
+          {{ language }} | Created {{ moment.utc(created_at).fromNow() }} | Updated {{ moment.utc(updated_at).fromNow() }}
+        </p>
+      </div>
+      <!-- {{/project}} -->
     </script>
 
     <!-- Le javascript
@@ -90,7 +88,7 @@
     <script src="./bower_components/underscore/underscore.js"></script>
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script src="./bower_components/moment/min/moment.min.js"></script>
-    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./bower_components/ractive/ractive-legacy.min.js"></script>
     <script src="./js/app.js"></script>
 
   </body>

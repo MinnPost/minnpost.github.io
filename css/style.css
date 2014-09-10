@@ -1,45 +1,26 @@
 
 body {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
-/* Custom container */
-.container-narrow {
-  margin: 0 auto;
-  max-width: 770px;
-}
-.container-narrow > hr {
-  margin: 30px 0;
+body.mp h1 {
+  margin-bottom: 0em;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  margin: 60px 0;
-  text-align: center;
-}
-.jumbotron h1 {
-  font-size: 72px;
-  line-height: 1;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+body.mp .lead {
+  margin-bottom: 3em;
+  font-size: 1.5em;
 }
 
-/* Supporting marketing content */
-.spaced-row {
-  margin-bottom: 30px;
+body.mp .project {
+  margin-bottom: 3em;
 }
 
-.loading {
-  text-align: center;
-  text-transform: uppercase;
-  color: #676767;
-  margin: 30px 0;
+body.mp .repo-meta {
+  color: #404040;
 }
 
-#repos h4 small {
-  margin-left: 1em;
-  font-size: .7em;
+
+@media screen and (max-width: 500px)
 }
