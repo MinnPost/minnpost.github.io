@@ -21,6 +21,8 @@ body.mp .repo-meta {
   color: #404040;
 }
 
-
-@media screen and (max-width: 500px)
+@media screen and (max-width: 638px) {
+  body.mp .row {
+    margin: 0;
+  }
 }
