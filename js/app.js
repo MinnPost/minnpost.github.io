@@ -24,6 +24,11 @@
       r_status: 'Reusable and launched in multiple states'
     },
     {
+      r: 'election-night-api',
+      r_score: 8,
+      r_status: 'Intended for adaptation to multiple states'
+    },
+    {
       r: 'jsonproxy',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
