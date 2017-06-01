@@ -19,6 +19,11 @@
   // and a small blurb on the resusability status of project
   var repos = [
     {
+      r: 'object-sync-for-salesforce',
+      r_score: 10,
+      r_status: 'Public plugin for WordPress'
+    },
+    {
       r: 'legislature-tracker',
       r_score: 9,
       r_status: 'Reusable and launched in multiple states'
