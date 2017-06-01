@@ -34,6 +34,11 @@
       r_status: 'Intended for adaptation to multiple states'
     },
     {
+      r: 'minnpost-pledges',
+      r_score: 8,
+      r_status: 'Easily deployable on Heroku'
+    },
+    {
       r: 'jsonproxy',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
