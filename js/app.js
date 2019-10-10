@@ -54,19 +54,9 @@
       r_status: 'Easily deployable on Heroku'
     },
     {
-      r: 'drupal-permissions',
-      r_score: 7,
-      r_status: 'Reusable'
-    },
-    {
       r: 'leaflet-addons',
       r_score: 3,
       r_status: 'Could be more tested (not maintained)'
-    },
-    {
-      r: 'mn-boundaryservice',
-      r_score: 6,
-      r_status: 'Reusable, but specific to Minnesota'
     },
     {
       r: 'jquery-vertical-timeline',
