@@ -34,6 +34,21 @@
       r_status: 'Intended for adaptation to multiple states'
     },
     {
+      r: 'minnpost-wordpress',
+      r_score: 8,
+      r_status: 'Public version of our WordPress instance'
+    },
+    {
+      r: 'minnpost-largo',
+      r_score: 8,
+      r_status: 'Theme for WordPress'
+    },
+    {
+      r: 'wp-message-inserter-plugin',
+      r_score: 8,
+      r_status: 'Inserts customizable messages into regions within WordPress layouts'
+    },
+    {
       r: 'minnpost-pledges',
       r_score: 8,
       r_status: 'Easily deployable on Heroku'
